@@ -14,7 +14,7 @@ More details about the current implementation of a word-level FIM GPT-2 model ar
 ### Training an FIM-augmented GPT-2 from scratch
 
 
-### Using the model to estimate various conditional probabilities 
+### Using the approach to estimate various conditional probabilities 
 
 ## Software
 Existing infill-trained GPT-2 models can be found on Huggingface:
