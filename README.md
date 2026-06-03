@@ -1,11 +1,27 @@
 # word-infill-model-training
-Code for training infill-based GPT-2 based the fill-in-the-middle approach proposed for code-infilling by [Bavarian et al. (2022)](https://arxiv.org/pdf/2207.14255)
+Requisite scripts for training and running inference on an infill-based GPT-2 based the fill-in-the-middle (FIM) approach proposed by [Bavarian et al. (2022)](https://arxiv.org/pdf/2207.14255) for code-infilling.
 
-More details about the current implementation for word-level FIM are reported in [Upadhye \& Futrell (2025)](https://arxiv.org/pdf/2511.07752)
+More details about the current implementation of a word-level FIM GPT-2 model are reported in [Upadhye \& Futrell (2025)](https://arxiv.org/pdf/2511.07752).
 
-Existing pre-trained GPT-2 models can be found on Huggingface:
+Existing infill-trained GPT-2 models can be found on Huggingface:
 
 Trained on wikitext-v2: https://huggingface.co/shiupadhye/gpt2-small-infill-adapted-wikitext
 
 Trained on CANDOR (speech): https://huggingface.co/shiupadhye/gpt2-small-infill-adapted-candor
+
+
+
+## Usage
+
+### Augmenting data for training and inference.
+
+
+### Training a tokenizer from scratch or including FIM tokens in existing tokenizer.
+
+
+### Training an FIM-augmented GPT-2 from scratch
+
+
+### Using the model to estimate various conditional probabilities 
+
 
