@@ -4,9 +4,11 @@ Requisite scripts for training and running inference on an infill-augmented GPT-
 ## Usage
 
 ### Augmenting data for training and inference
+To enable GPT-2 to have access to observed bidirectional context, the training data needs to be reformulated as follows:
+
 <img width="8269" height="5710" alt="augmentation" src="https://github.com/user-attachments/assets/6356d3b1-7b53-447a-b0a5-771a9be1dc66" />
 
-Run the ```data_augmentation.py``` script on your training and/or evaluation corpora for training and validating the model.
+Run the ```data_augmentation.py``` script with your training and/or evaluation data (where each line represents a sequence/sentence) to generated the augmented sequence data.
 
 ```
 python data_augmentation.py \
@@ -18,7 +20,7 @@ python data_augmentation.py \
 
 ```
 
-The ```fim_rate``` parameter determines the proportion of sequences that need to be augmented. An ```fim_rate = 1``` augments every sequence in th corpus.  The ```spm_rate``` parameters assumes values between 0 and 1 and determines the proportion of augmented sequences that should be ordered suffix-first (e.g.,\<eos\> \<suf\> over the lazy dog \<pre\> the quick brown fox \<mid\> jumps \<eos\>). For example, ```spm_rate = 0.5```, augments 50\% of the sequences in a suffix-first order. 
+The ```fim_rate``` parameter determines the proportion of sequences that need to be augmented. An ```fim_rate = 1``` augments every sequence in th corpus.  The ```spm_rate``` parameters assumes values between 0 and 1 and determines the proportion of augmented sequences that should be ordered suffix-first (e.g.,\<eos\> \<suf\> over the lazy dog \<pre\> the quick brown fox \<mid\> jumps \<eos\>). For example, ```spm_rate = 0.5```, augments 50\% of the sequences in a suffix-first order. More details about the algorithmic implementation can be found in [Upadhye \& Futrell (2025)](https://arxiv.org/pdf/2511.07752).
 
 
 ### Training a tokenizer from scratch or including FIM tokens in existing tokenizer
