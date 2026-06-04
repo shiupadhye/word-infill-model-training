@@ -1,30 +1,31 @@
 # word-infill-LM
-Requisite scripts for training and running inference on an infill-augmented GPT-2 based the fill-in-the-middle (FIM) approach originally proposed by [Bavarian et al. (2022)](https://arxiv.org/pdf/2207.14255) for code-infilling. More details about the current implementation of a word-level FIM GPT-2 model are reported in [Upadhye \& Futrell (2025)](https://arxiv.org/pdf/2511.07752).
+Requisite scripts for training and running inference on an infill-trained GPT-2 based the fill-in-the-middle (FIM) approach originally proposed by [Bavarian et al. (2022)](https://arxiv.org/pdf/2207.14255) for code-infilling. More details about the current implementation of a word-level FIM GPT-2 model are reported in [Upadhye \& Futrell (2025)](https://arxiv.org/pdf/2511.07752).
 
 ## Usage
 
-### Augmenting data for training and inference
-To enable GPT-2 to have access to observed bidirectional context, the training data needs to be reformulated as follows:
+### Reformulating data for enabling FIM-training and inference
+To enable an autoregressive model such as GPT-2 to have access to observed bidirectional context, the training corpus should be reformulated as follows:
 
 <img width="8269" height="5710" alt="augmentation" src="https://github.com/user-attachments/assets/6356d3b1-7b53-447a-b0a5-771a9be1dc66" />
 
-Run the ```data_augmentation.py``` script with your training and/or evaluation data (where each line represents a sequence/sentence) to generated the augmented sequence data.
+Run the ```prepare_fim_data.py``` script with your training and/or evaluation data as inputs to generate their FIM variants. Note that the script requires the data to be stored in a .txt file, with each line representing a sequence/sentence that begins and ends with an \<eos\> tag.
 
 ```
-python data_augmentation.py \
-    --infile  data/wikitext-2-v1/wikitext-2-v1_validation.txt \
-    --outfile data/wikitext-2-v1/fim/wikitext-2-v1_validation.txt \
+python prepare_fim_data.py \
+    --infile  [path to existing corpus file].txt \
+    --outfile [path to modifed corpus file].txt \
     --fim-rate 1.0 \
     --spm-rate 0.5 \
     --seed 0
 
 ```
 
-The ```fim_rate``` parameter determines the proportion of sequences that need to be augmented. An ```fim_rate = 1``` augments every sequence in th corpus.  The ```spm_rate``` parameters assumes values between 0 and 1 and determines the proportion of augmented sequences that should be ordered suffix-first (e.g.,\<eos\> \<suf\> over the lazy dog \<pre\> the quick brown fox \<mid\> jumps \<eos\>). For example, ```spm_rate = 0.5```, augments 50\% of the sequences in a suffix-first order. More details about the algorithmic implementation can be found in [Upadhye \& Futrell (2025)](https://arxiv.org/pdf/2511.07752).
+The ```fim_rate``` parameter determines the proportion of sequences that need to be reformulated. An ```fim_rate = 1``` reformulates every sequence in the corpus. For a given sequence with N words, each token has a uniform probability (1/N) of being selected as the 'middle' token and transposed to the end of the sequence.  
+The ```spm_rate``` parameters assumes values between 0 and 1 and determines the proportion of reformulated sequences that should be ordered suffix-first (e.g.,\<eos\> \<suf\> over the lazy dog \<pre\> the quick brown fox \<mid\> jumps \<eos\>). For example, ```spm_rate = 0.5```, reformulates 50\% of the sequences in a suffix-first order. More details about the algorithmic implementation can be found in [Upadhye \& Futrell (2025)](https://arxiv.org/pdf/2511.07752).
 
 
 ### Training a tokenizer from scratch or including FIM tokens in existing tokenizer
-Using the FIM-augmented GPT-2 model requires that the tokenizer vocabulary include the \<pre\>, \<suf\>, and \<mid\> sentinel tokens. This can be done by:
+Using the FIM-enabled GPT-2 model requires that the tokenizer vocabulary include the \<pre\>, \<suf\>, and \<mid\> sentinel tokens. This can be done by:
 
 1. Training a tokenizer from scratch:
    
@@ -38,6 +39,8 @@ python train_tokenizer.py train \
 
 This command trains a word-level (whitespace-delimited tokenizer). Note that a word-level tokenizer is not required, as the training and inference can also be conducted using standard byte-pair encoding (BPE) tokenizer, so long as the aforementioned sentinels are included. This can be done by extending the vocabulary of an existing tokenizer as follows:
 
+2. Extending an existing tokenizer:
+   
 ```
 python train_tokenizer.py add-specials \
 
@@ -47,7 +50,7 @@ python train_tokenizer.py add-specials \
 ```
 
 
-### Training an FIM-augmented GPT-2 from scratch
+### Training an FIM-enabled GPT-2 from scratch
 Below is the command for pre-training a GPT-2 small transformer model on the augmented training data. 
 
 ```
@@ -58,7 +61,7 @@ python train_model.py \
 --output-dir [directory where the checkpoints should be saved]
 ```
 
-Note that depending on the ```fim_rate```, the validation dataset also needs to be similarily modifid. For example, if only 50\% of the sequences in the training data are augmented, it is recommended that validation data also contain a similar proportion of augmented sequences. Other hyperparameters such as number of epochs, logging steps, learning rate can be modified directly in the script.
+Note that depending on the ```fim_rate``` for the training data, the validation data may also need to be similarily modified to ensure that the model encounters sequences that are structured similarly to those it was trained on---a mis-match may produce lower than expected validation perplexity. For example, if only 50\% of the sequences in the training data were reformulated, it is recommended that the validation data also contain a similar proportion of reformulated sequences. Other hyperparameters such as number of epochs, logging steps, learning rate, weights and biases logging etc. can be modified directly in the script.
 
 
 ### Using the approach to estimate various conditional probabilities 
