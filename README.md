@@ -6,6 +6,18 @@ Requisite scripts for training and running inference on an infill-augmented GPT-
 ### Augmenting data for training and inference.
 <img width="8269" height="5710" alt="augmentation" src="https://github.com/user-attachments/assets/6356d3b1-7b53-447a-b0a5-771a9be1dc66" />
 
+Run the data_augmentation.py script on your training and/or evaluation corpora for training and validating the model.
+
+```
+python data_augmentation.py \
+    --infile  data/wikitext-2-v1/wikitext-2-v1_validation.txt \
+    --outfile data/wikitext-2-v1/fim/wikitext-2-v1_validation.txt \
+    --fim-rate 1.0 \
+    --spm-rate 0.5 \
+    --seed 0
+
+```
+The ```fim_rate``` parameter determines the proportion of sequences that need to be augmented. An ```fim_rate = 1``` augments every sequence.  The ```spm_rate``` parameter takes values between 0 and 1 determines the proportion of augmented sequences that should be ordered suffix-order (i.e., <eos> <suf> over the lazy dog <pre> the quick brown fox <mid> jumps) or prefix-first (i.e., <eos> <pre> the quick brown fox <suf> over the fence <mid> jumps <eos>). 
 
 
 ### Training a tokenizer from scratch or including FIM tokens in existing tokenizer.
