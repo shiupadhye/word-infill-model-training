@@ -18,10 +18,31 @@ python data_augmentation.py \
 
 ```
 
-The ```fim_rate``` parameter determines the proportion of sequences that need to be augmented. An ```fim_rate = 1``` augments every sequence in th corpus.  The ```spm_rate``` parameters assumes values between 0 and 1 and determines the proportion of augmented sequences that should be ordered suffix-first (e.g.,\<eos\> \<suf\> over the lazy dog \<pre\> the quick brown fox \<mid\> jumps \<eos\>). For example, ```spm_rate = 0.5```, augments 50\% of the sequences in a suffix-first order.
+The ```fim_rate``` parameter determines the proportion of sequences that need to be augmented. An ```fim_rate = 1``` augments every sequence in th corpus.  The ```spm_rate``` parameters assumes values between 0 and 1 and determines the proportion of augmented sequences that should be ordered suffix-first (e.g.,\<eos\> \<suf\> over the lazy dog \<pre\> the quick brown fox \<mid\> jumps \<eos\>). For example, ```spm_rate = 0.5```, augments 50\% of the sequences in a suffix-first order. 
 
 
 ### Training a tokenizer from scratch or including FIM tokens in existing tokenizer
+Using the FIM-augmented GPT-2 model requires that the tokenizer vocabulary include the \<pre\>, \<suf\>, and \<mid\> sentinel tokens. This can be done by:
+
+1. Training a tokenizer from scratch:
+   
+```
+`python train_tokenizer.py train \`
+
+`--corpus [path to corpus file].txt \`
+
+`--out    [path to saved tokenizer file].json`
+```
+
+This command trains a word-level (whitespace-delimited tokenizer). Note that a word-level tokenizer is not required, as the training and inference can also be conducted using standard byte-pair encoding (BPE) tokenizer, so long as the aforementioned sentinels are included. This can be done by extending the vocabulary of an existing tokenizer as follows:
+
+```
+`python train_tokenizer.py add-specials \`
+
+`--base [path to existing tokenizer] \`
+
+`--out  [path to saved tokenizer file].json`
+```
 
 
 ### Training an FIM-augmented GPT-2 from scratch
