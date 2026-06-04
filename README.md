@@ -6,7 +6,7 @@ Requisite scripts for training and running inference on an infill-augmented GPT-
 ### Augmenting data for training and inference.
 <img width="8269" height="5710" alt="augmentation" src="https://github.com/user-attachments/assets/6356d3b1-7b53-447a-b0a5-771a9be1dc66" />
 
-Run the data_augmentation.py script on your training and/or evaluation corpora for training and validating the model.
+Run the ```data_augmentation.py``` script on your training and/or evaluation corpora for training and validating the model.
 
 ```
 python data_augmentation.py \
