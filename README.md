@@ -61,7 +61,7 @@ python train_model.py \
 --output-dir [directory where the checkpoints should be saved]
 ```
 
-Note that depending on the ```fim_rate``` for the training data, the validation data may also need to be similarily modified to ensure that the model encounters sequences that are structured similarly to those it was trained on---a mis-match may produce lower than expected validation perplexity. For example, if only 50\% of the sequences in the training data were reformulated, it is recommended that the validation data also contain a similar proportion of reformulated sequences. Other hyperparameters such as number of epochs, logging steps, learning rate, weights and biases logging etc. can be modified directly in the script.
+Note that depending on the ```fim_rate``` for the training data, the validation data may also need to be similarily modified to ensure that the model encounters sequences that are structured similarly to those it was trained on -- a mis-match in the formatting may produce lower than expected validation perplexity. For example, if only 50\% of the sequences in the training data were reformulated, it is recommended that the validation data also contain a similar proportion of reformulated sequences. Other hyperparameters such as number of epochs, logging steps, learning rate, weights and biases logging etc. can be modified directly in the script.
 
 
 ### Using the approach to estimate various conditional probabilities 
