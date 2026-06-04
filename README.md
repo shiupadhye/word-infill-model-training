@@ -4,6 +4,8 @@ Requisite scripts for training and running inference on an infill-augmented GPT-
 ## Usage
 
 ### Augmenting data for training and inference.
+<img width="8269" height="5710" alt="augmentation" src="https://github.com/user-attachments/assets/6356d3b1-7b53-447a-b0a5-771a9be1dc66" />
+
 
 
 ### Training a tokenizer from scratch or including FIM tokens in existing tokenizer.
