@@ -46,6 +46,17 @@ python train_tokenizer.py add-specials \
 
 
 ### Training an FIM-augmented GPT-2 from scratch
+Below is the command for pre-training a GPT-2 small transformer model on the augmented training data. 
+
+```
+python train_model.py \
+--train     [path to training file].txt \
+--valid     [path to validation file].txt \
+--tokenizer [path to tokenizer].json \
+--output-dir [directory where the checkpoints should be saved]
+```
+
+Note that depending on the ```fim_rate```, the validation dataset also needs to be similarily modifid. For example, if only 50\% of the sequences in the training data are augmented, it is recommended that validation data also contain a similar proportion of augmented sequences. Other hyperparameters such as number of epochs, logging steps, learning rate can be modified directly in the script.
 
 
 ### Using the approach to estimate various conditional probabilities 
