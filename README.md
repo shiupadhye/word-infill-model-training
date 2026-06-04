@@ -73,8 +73,8 @@ The scoring functions for estimating the (log) probability of a word given prefi
 ```
 # bidirectional (uses both prefix and suffix)
 python score.py \
-    --model     models/gpt2-candor/checkpoint-662895 \
-    --tokenizer tokenizer/candor_tokenizer.json \
+    --model     [model checkpoint] \
+    --tokenizer [tokenizer path].json \
     --prefix    "it's not against the law to" \
     --suffix    "alligators through the mail" \
     --target    send \
