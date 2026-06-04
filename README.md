@@ -61,6 +61,22 @@ Note that depending on the ```fim_rate```, the validation dataset also needs to 
 
 ### Using the approach to estimate various conditional probabilities 
 
+<img width="8631" height="4116" alt="inference" src="https://github.com/user-attachments/assets/497cb75b-dc90-44ce-be3a-55dd1b0cca59" />
+
+The scoring functions for estimating the (log) probability of a word given prefix only, suffix only, and bidirectional context are provided in ```fim_inference.py```. Bidirectional probabilities, in particular, can be estimated by reformulating the input in the (i) the prefix-suffix-mid (PSM) order, (ii) suffix-prefix-mid (SPM) order, or (iii) computing the average of the two orders. If the training data were reformulated such that augmented sequences only showed a PSM order (i.e., when ```spm_rate = 0```), option (i) should suffice. However, if the training data consisted of both orderings, it is recommended to use option (iii). Below is an example command for scoring using the command line:
+
+```
+# bidirectional (uses both prefix and suffix)
+python score.py \
+    --model     models/gpt2-candor/checkpoint-662895 \
+    --tokenizer tokenizer/candor_tokenizer.json \
+    --prefix    "it's not against the law to" \
+    --suffix    "alligators through the mail" \
+    --target    send \
+    --mode      bidirectional \
+    --order     average
+```
+
 ## Software
 Existing infill-trained GPT-2 models can be found on Huggingface:
 
