@@ -17,7 +17,8 @@ python data_augmentation.py \
     --seed 0
 
 ```
-The ```fim_rate``` parameter determines the proportion of sequences that need to be augmented. An ```fim_rate = 1``` augments every sequence.  The ```spm_rate``` parameter takes values between 0 and 1 determines the proportion of augmented sequences that should be ordered suffix-order (e.g., <eos> <suf> over the lazy dog <pre> the quick brown fox <mid> jumps) or prefix-first (e.g., <eos> <pre> the quick brown fox <suf> over the fence <mid> jumps <eos>). For example, ```spm_rate = 0.5```, augments 50\% of the sequences suffix-first.
+
+The ```fim_rate``` parameter determines the proportion of sequences that need to be augmented. An ```fim_rate = 1``` augments every sequence in th corpus.  The ```spm_rate``` parameters assumes values between 0 and 1 and determines the proportion of augmented sequences that should be ordered suffix-first (e.g., <eos> <suf> over the lazy dog <pre> the quick brown fox <mid> jumps). For example, ```spm_rate = 0.5```, augments 50\% of the sequences in a suffix-first order.
 
 
 ### Training a tokenizer from scratch or including FIM tokens in existing tokenizer.
