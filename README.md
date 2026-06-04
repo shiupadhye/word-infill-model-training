@@ -27,21 +27,21 @@ Using the FIM-augmented GPT-2 model requires that the tokenizer vocabulary inclu
 1. Training a tokenizer from scratch:
    
 ```
-`python train_tokenizer.py train \`
+python train_tokenizer.py train \
 
-`--corpus [path to corpus file].txt \`
+--corpus [path to corpus file].txt \
 
-`--out    [path to saved tokenizer file].json`
+--out    [path to saved tokenizer file].json
 ```
 
 This command trains a word-level (whitespace-delimited tokenizer). Note that a word-level tokenizer is not required, as the training and inference can also be conducted using standard byte-pair encoding (BPE) tokenizer, so long as the aforementioned sentinels are included. This can be done by extending the vocabulary of an existing tokenizer as follows:
 
 ```
-`python train_tokenizer.py add-specials \`
+python train_tokenizer.py add-specials \
 
-`--base [path to existing tokenizer] \`
+--base [path to existing tokenizer] \
 
-`--out  [path to saved tokenizer file].json`
+--out  [path to saved tokenizer file].json
 ```
 
 
